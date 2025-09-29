@@ -4,24 +4,22 @@
   <meta charset="UTF-8">
   <title>Shipping Trivia Loop</title>
 
-  <!-- Preload fonts (adjust URLs to your repo) -->
-  <link rel="preload" href="https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/Antenna-BlackItalic.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/GT-America-Standard-Medium.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Preload fonts -->
+  <link rel="preload" href="https://raw.githubusercontent.com/dmakhlin-fp/FF25_Trivia/65a7fb707f8d91887c610a7a2878a605f256e9c6/Fonts/Antenna-BlackItalic.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="https://raw.githubusercontent.com/dmakhlin-fp/FF25_Trivia/65a7fb707f8d91887c610a7a2878a605f256e9c6/Fonts/GT-America-Standard-Medium.otf" as="font" type="font/otf" crossorigin>
 
   <style>
     /* ====== FONTS ====== */
     @font-face {
       font-family: 'Antenna-BlackItalic';
-      src: url('https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/Antenna-BlackItalic.woff2') format('woff2'),
-           url('https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/Antenna-BlackItalic.woff') format('woff');
+      src: url('https://raw.githubusercontent.com/dmakhlin-fp/FF25_Trivia/65a7fb707f8d91887c610a7a2878a605f256e9c6/Fonts/Antenna-BlackItalic.otf') format('opentype');
       font-weight: 900;
       font-style: italic;
     }
 
     @font-face {
       font-family: 'GT-America-Standard-Medium';
-      src: url('https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/GT-America-Standard-Medium.woff2') format('woff2'),
-           url('https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/GT-America-Standard-Medium.woff') format('woff');
+      src: url('https://raw.githubusercontent.com/dmakhlin-fp/FF25_Trivia/65a7fb707f8d91887c610a7a2878a605f256e9c6/Fonts/GT-America-Standard-Medium.otf') format('opentype');
       font-weight: 500;
       font-style: normal;
     }
@@ -149,13 +147,13 @@
           });
         }, 10000);
 
-        // After 20s total, advance to next
+        // Advance after 20s
         setTimeout(() => {
           currentIndex = (currentIndex + 1) % questions.length;
           showQuestion(currentIndex);
         }, 20000);
 
-      }, 2000); // wait for fade out transition before switching
+      }, 2000); // wait fade-out before switch
     }
 
     // Start
