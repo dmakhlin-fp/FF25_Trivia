@@ -4,17 +4,19 @@
   <meta charset="UTF-8">
   <title>Shipping Trivia Loop</title>
 
-  <!-- Preload fonts (now from same domain) -->
+  <!-- Preload fonts (from your GitHub Pages domain directly) -->
   <link rel="preload" href="Fonts/Antenna-BlackItalic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="Fonts/GT-America-Standard-Medium.woff2" as="font" type="font/woff2" crossorigin>
 
   <style>
+    /* --- Custom Fonts --- */
     @font-face {
       font-family: 'Antenna-BlackItalic';
       src: url('Fonts/Antenna-BlackItalic.woff2') format('woff2'),
            url('Fonts/Antenna-BlackItalic.woff') format('woff');
       font-weight: 900;
       font-style: italic;
+      font-display: swap; /* fail-safe */
     }
 
     @font-face {
@@ -23,8 +25,10 @@
            url('Fonts/GT-America-Standard-Medium.woff') format('woff');
       font-weight: 500;
       font-style: normal;
+      font-display: swap;
     }
 
+    /* --- Global Styles --- */
     body {
       margin: 0;
       background: linear-gradient(to bottom, #31B8E9, #F7BEA8);
@@ -103,26 +107,14 @@
       { question: "What does 'FOB' stand for in freight terms?", answers: ["Free on Board","Freight on Balance","Full Offshore Booking","Free of Broker"], correct: 0 },
       { question: "Which document serves as a receipt for shipped goods?", answers: ["Bill of Lading","Invoice","Manifest","Charter Party"], correct: 0 },
       { question: "Which unit measures cargo ship capacity?", answers: ["Barrels","Cubic Feet","Deadweight Tonnage","Metric Tons"], correct: 2 },
-      { question: "The Panama Canal connects which two oceans?", answers: ["Atlantic and Pacific","Indian and Atlantic","Pacific and Arctic","Atlantic and Arctic"], correct: 0 },
-      { question: "Which Incoterm means the seller pays for transport and insurance?", answers: ["EXW","CIF","FCA","DAP"], correct: 1 },
-      { question: "What does 'ETA' mean in shipping?", answers: ["Estimated Transport Allocation","Estimated Time of Arrival","End Transit Agreement","Export Trade Approval"], correct: 1 },
-      { question: "Which country built the Belt and Road Initiative affecting shipping?", answers: ["USA","Germany","China","India"], correct: 2 },
-      { question: "What is the purpose of a reefer container?", answers: ["Store oversized cargo","Transport liquids","Carry refrigerated goods","Fast loading"], correct: 2 },
-      { question: "Which ocean handles the most container traffic?", answers: ["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"], correct: 2 },
-      { question: "Which port is the largest in Europe?", answers: ["Antwerp","Rotterdam","Hamburg","Marseille"], correct: 1 },
-      { question: "The term 'last mile delivery' refers to:", answers: ["Final leg to customer","First port unloading","Interstate trucking","Return logistics"], correct: 0 },
-      { question: "What does 'LCL' mean?", answers: ["Low Cargo Load","Less than Container Load","Loading Container Logistics","Long Cargo Lanes"], correct: 1 },
-      { question: "What technology tracks containers worldwide?", answers: ["Blockchain","GPS","5G","Artificial Intelligence"], correct: 1 },
-      { question: "Which port is the busiest in the United States?", answers: ["Miami","New York/New Jersey","Los Angeles","Houston"], correct: 2 },
-      { question: "What does 'intermodal' shipping involve?", answers: ["One transport only","Multiple transport modes","International only","Sea freight exclusively"], correct: 1 },
-      { question: "Which container type is used for liquids in bulk?", answers: ["Dry Van","Flat Rack","ISO Tank","Reefer"], correct: 2 }
+      { question: "The Panama Canal connects which two oceans?", answers: ["Atlantic and Pacific","Indian and Atlantic","Pacific and Arctic","Atlantic and Arctic"], correct: 0 }
     ];
 
     let currentIndex = 0;
 
     function showQuestion(index) {
       const trivia = document.getElementById("trivia");
-      trivia.classList.remove("visible"); // fade out
+      trivia.classList.remove("visible");
 
       setTimeout(() => {
         const q = questions[index];
@@ -138,25 +130,24 @@
           answersDiv.appendChild(div);
         });
 
-        trivia.classList.add("visible"); // fade in
+        trivia.classList.add("visible");
 
-        // Fade out wrong answers after 10s
+        // fade wrong answers
         setTimeout(() => {
           document.querySelectorAll(".answer").forEach((el, i) => {
             if (i !== q.correct) el.classList.add("fade-out");
           });
         }, 10000);
 
-        // Advance after 20s
+        // move to next question
         setTimeout(() => {
           currentIndex = (currentIndex + 1) % questions.length;
           showQuestion(currentIndex);
         }, 20000);
 
-      }, 2000); // wait fade-out before switch
+      }, 2000);
     }
 
-    // Start
     showQuestion(currentIndex);
   </script>
 </body>
