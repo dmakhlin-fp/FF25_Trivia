@@ -3,12 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <title>Shipping Trivia Loop</title>
+
+  <!-- Preload fonts (adjust URLs to your repo) -->
+  <link rel="preload" href="https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/Antenna-BlackItalic.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/GT-America-Standard-Medium.woff2" as="font" type="font/woff2" crossorigin>
+
   <style>
+    /* ====== FONTS ====== */
+    @font-face {
+      font-family: 'Antenna-BlackItalic';
+      src: url('https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/Antenna-BlackItalic.woff2') format('woff2'),
+           url('https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/Antenna-BlackItalic.woff') format('woff');
+      font-weight: 900;
+      font-style: italic;
+    }
+
+    @font-face {
+      font-family: 'GT-America-Standard-Medium';
+      src: url('https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/GT-America-Standard-Medium.woff2') format('woff2'),
+           url('https://raw.githubusercontent.com/YourUser/YourRepo/main/Fonts/GT-America-Standard-Medium.woff') format('woff');
+      font-weight: 500;
+      font-style: normal;
+    }
+
+    /* ====== GLOBAL STYLES ====== */
     body {
       margin: 0;
       background: linear-gradient(to bottom, #31B8E9, #F7BEA8);
-      color: #052439; /* Text color */
-      font-family: Arial, sans-serif;
+      color: #052439;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -36,28 +58,31 @@
     }
 
     .question {
+      font-family: 'Antenna-BlackItalic', sans-serif;
       font-size: 3rem;
       margin-bottom: 3rem;
       max-width: 90%;
+      text-transform: uppercase; /* All caps */
     }
 
     .answers {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 2rem 4rem;
-      justify-content: center;   /* center grid */
+      justify-content: center;
       align-items: center;
       margin: 0 auto;
       width: auto;
     }
 
     .answer {
+      font-family: 'GT-America-Standard-Medium', sans-serif;
       font-size: 2rem;
       text-align: left;
       transition: opacity 3s ease;
       max-width: 500px;
       margin: 0 auto;
-      color: #052439;   /* Ensure answers also use new text color */
+      color: #052439;
     }
 
     .fade-out {
@@ -99,7 +124,7 @@
 
     function showQuestion(index) {
       const trivia = document.getElementById("trivia");
-      trivia.classList.remove("visible"); // fade out entire container
+      trivia.classList.remove("visible"); // fade out
 
       setTimeout(() => {
         const q = questions[index];
@@ -115,7 +140,7 @@
           answersDiv.appendChild(div);
         });
 
-        trivia.classList.add("visible"); // fade in entire container
+        trivia.classList.add("visible"); // fade in
 
         // Fade out wrong answers after 10s
         setTimeout(() => {
@@ -130,7 +155,7 @@
           showQuestion(currentIndex);
         }, 20000);
 
-      }, 2000); // wait fade-out before switching
+      }, 2000); // wait for fade out transition before switching
     }
 
     // Start
