@@ -4,19 +4,18 @@
   <meta charset="UTF-8">
   <title>Shipping Trivia Loop</title>
 
-  <!-- Preload fonts (from your GitHub Pages domain directly) -->
+  <!-- Preload fonts -->
   <link rel="preload" href="Fonts/Antenna-BlackItalic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="Fonts/GT-America-Standard-Medium.woff2" as="font" type="font/woff2" crossorigin>
 
   <style>
-    /* --- Custom Fonts --- */
     @font-face {
       font-family: 'Antenna-BlackItalic';
       src: url('Fonts/Antenna-BlackItalic.woff2') format('woff2'),
            url('Fonts/Antenna-BlackItalic.woff') format('woff');
       font-weight: 900;
       font-style: italic;
-      font-display: swap; /* fail-safe */
+      font-display: swap;
     }
 
     @font-face {
@@ -28,7 +27,6 @@
       font-display: swap;
     }
 
-    /* --- Global Styles --- */
     body {
       margin: 0;
       background: linear-gradient(to bottom, #31B8E9, #F7BEA8);
@@ -60,7 +58,7 @@
     }
 
     .question {
-      font-family: 'Antenna-BlackItalic', sans-serif;
+      font-family: 'Antenna-BlackItalic' !important;
       font-size: 3rem;
       margin-bottom: 3rem;
       max-width: 90%;
@@ -78,7 +76,7 @@
     }
 
     .answer {
-      font-family: 'GT-America-Standard-Medium', sans-serif;
+      font-family: 'GT-America-Standard-Medium' !important;
       font-size: 2rem;
       text-align: left;
       transition: opacity 3s ease;
@@ -101,13 +99,7 @@
   <script>
     const questions = [
       { question: "What does 'TEU' stand for in shipping?", answers: ["Transport Efficiency Unit","Twenty-foot Equivalent Unit","Total Export Utility","Terminal Entry Usage"], correct: 1 },
-      { question: "Which canal significantly shortens the shipping route between Europe and Asia?", answers: ["Panama Canal","Suez Canal","Kiel Canal","Corinth Canal"], correct: 1 },
-      { question: "What is the main container size used in global shipping?", answers: ["10-foot","20-foot","30-foot","50-foot"], correct: 1 },
-      { question: "Which city is the world's busiest container port?", answers: ["Rotterdam","Shanghai","Singapore","Los Angeles"], correct: 1 },
-      { question: "What does 'FOB' stand for in freight terms?", answers: ["Free on Board","Freight on Balance","Full Offshore Booking","Free of Broker"], correct: 0 },
-      { question: "Which document serves as a receipt for shipped goods?", answers: ["Bill of Lading","Invoice","Manifest","Charter Party"], correct: 0 },
-      { question: "Which unit measures cargo ship capacity?", answers: ["Barrels","Cubic Feet","Deadweight Tonnage","Metric Tons"], correct: 2 },
-      { question: "The Panama Canal connects which two oceans?", answers: ["Atlantic and Pacific","Indian and Atlantic","Pacific and Arctic","Atlantic and Arctic"], correct: 0 }
+      { question: "Which canal significantly shortens the shipping route between Europe and Asia?", answers: ["Panama Canal","Suez Canal","Kiel Canal","Corinth Canal"], correct: 1 }
     ];
 
     let currentIndex = 0;
@@ -126,7 +118,6 @@
           const div = document.createElement("div");
           div.className = "answer";
           div.textContent = ans;
-          if (i === q.correct) div.dataset.correct = true;
           answersDiv.appendChild(div);
         });
 
@@ -139,7 +130,7 @@
           });
         }, 10000);
 
-        // move to next question
+        // next question
         setTimeout(() => {
           currentIndex = (currentIndex + 1) % questions.length;
           showQuestion(currentIndex);
