@@ -4,12 +4,10 @@
   <meta charset="UTF-8">
   <title>Shipping Trivia Loop</title>
 
-  <!-- Preload fonts -->
   <link rel="preload" href="Fonts/Antenna-BlackItalic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="Fonts/GT-America-Standard-Medium.woff2" as="font" type="font/woff2" crossorigin>
 
   <style>
-    /* --- Fonts --- */
     @font-face {
       font-family: 'Antenna-BlackItalic';
       src: url('Fonts/Antenna-BlackItalic.woff2') format('woff2'),
@@ -28,7 +26,7 @@
       font-display: swap;
     }
 
-    /* --- Animated Gradient Background --- */
+    /* Animated gradient */
     body {
       margin: 0;
       display: flex;
@@ -37,7 +35,6 @@
       height: 100vh;
       width: 100vw;
       overflow: hidden;
-
       background: linear-gradient(270deg, #31B8E9, #F7BEA8, #31B8E9);
       background-size: 600% 600%;
       animation: GradientShift 30s ease infinite;
@@ -50,64 +47,60 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* --- Trivia Container --- */
     .trivia-container {
       width: 1728px;
-      height: 960px;  /* fixed LED size */
+      height: 960px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 2rem;
-      box-sizing: border-box;
       opacity: 0;
       transition: opacity 2s ease;
+      padding: 2rem;
+      box-sizing: border-box;
     }
 
-    .trivia-container.visible {
-      opacity: 1;
-    }
+    .trivia-container.visible { opacity: 1; }
 
     .question {
       font-family: 'Antenna-BlackItalic', sans-serif !important;
-      font-size: 3rem;
-      margin-bottom: 3rem;
-      max-width: 90%;
+      font-size: 3.5rem;
       text-transform: uppercase;
-      line-height: 1.2;
+      line-height: 1.3;
+      max-width: 75%;
+      text-align: center;
+      margin: 0 auto 3rem;
+      word-break: keep-all;
+      hyphens: none;
     }
 
-    /* --- Answers Grid --- */
     .answers {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 2rem 3rem;
+      gap: 2rem 6rem;
+      width: 100%;
+      max-width: 1200px;
       justify-content: center;
       align-items: center;
-      margin: 0 auto;
-      width: 100%;
-      max-width: 1400px;
     }
 
     .answer {
       font-family: 'GT-America-Standard-Medium', sans-serif !important;
       font-size: 2rem;
-      text-align: left;
-      transition: opacity 3s ease;
-      padding: 1rem 2rem;
-      background: #FFEB56;
-      border-radius: 50px;    /* pill shape */
-      max-width: 600px;
-      margin: 0 auto;
       color: #052439;
-      line-height: 1.3;
-      word-break: keep-all;   /* prevents breaking in weird places */
+      background: #FFEB56;
+      border-radius: 50px;
+      padding: 1rem 2rem;
+      min-width: 350px;      /* consistent pill width */
+      min-height: 80px;      /* consistent button height */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 3s ease;
     }
 
-    .fade-out {
-      opacity: 0;
-    }
+    .fade-out { opacity: 0; }
   </style>
 </head>
 <body>
@@ -120,31 +113,14 @@
     const questions = [
       { question: "What does 'TEU' stand for in shipping?", answers: ["Transport Efficiency Unit","Twenty-foot Equivalent Unit","Total Export Utility","Terminal Entry Usage"], correct: 1 },
       { question: "Which canal significantly shortens the shipping route between Europe and Asia?", answers: ["Panama Canal","Suez Canal","Kiel Canal","Corinth Canal"], correct: 1 },
-      { question: "What is the main container size used in global shipping?", answers: ["10-foot","20-foot","30-foot","50-foot"], correct: 1 },
       { question: "Which city is the world's busiest container port?", answers: ["Rotterdam","Shanghai","Singapore","Los Angeles"], correct: 1 },
-      { question: "What does 'FOB' stand for in freight terms?", answers: ["Free on Board","Freight on Balance","Full Offshore Booking","Free of Broker"], correct: 0 },
-      { question: "Which document serves as a receipt for shipped goods?", answers: ["Bill of Lading","Invoice","Manifest","Charter Party"], correct: 0 },
-      { question: "Which unit measures cargo ship capacity?", answers: ["Barrels","Cubic Feet","Deadweight Tonnage","Metric Tons"], correct: 2 },
-      { question: "The Panama Canal connects which two oceans?", answers: ["Atlantic and Pacific","Indian and Atlantic","Pacific and Arctic","Atlantic and Arctic"], correct: 0 },
-      { question: "Which Incoterm means the seller pays for transport and insurance?", answers: ["EXW","CIF","FCA","DAP"], correct: 1 },
-      { question: "What does 'ETA' mean in shipping?", answers: ["Estimated Transport Allocation","Estimated Time of Arrival","End Transit Agreement","Export Trade Approval"], correct: 1 },
-      { question: "Which country built the Belt and Road Initiative affecting shipping?", answers: ["USA","Germany","China","India"], correct: 2 },
-      { question: "What is the purpose of a reefer container?", answers: ["Store oversized cargo","Transport liquids","Carry refrigerated goods","Fast loading"], correct: 2 },
-      { question: "Which ocean handles the most container traffic?", answers: ["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"], correct: 2 },
-      { question: "Which port is the largest in Europe?", answers: ["Antwerp","Rotterdam","Hamburg","Marseille"], correct: 1 },
-      { question: "The term 'last mile delivery' refers to:", answers: ["Final leg to customer","First port unloading","Interstate trucking","Return logistics"], correct: 0 },
-      { question: "What does 'LCL' mean?", answers: ["Low Cargo Load","Less than Container Load","Loading Container Logistics","Long Cargo Lanes"], correct: 1 },
-      { question: "What technology tracks containers worldwide?", answers: ["Blockchain","GPS","5G","Artificial Intelligence"], correct: 1 },
-      { question: "Which port is the busiest in the United States?", answers: ["Miami","New York/New Jersey","Los Angeles","Houston"], correct: 2 },
-      { question: "What does 'intermodal' shipping involve?", answers: ["One transport only","Multiple transport modes","International only","Sea freight exclusively"], correct: 1 },
-      { question: "Which container type is used for liquids in bulk?", answers: ["Dry Van","Flat Rack","ISO Tank","Reefer"], correct: 2 }
     ];
 
     let currentIndex = 0;
 
     function showQuestion(index) {
       const trivia = document.getElementById("trivia");
-      trivia.classList.remove("visible"); // fade out whole container
+      trivia.classList.remove("visible");
 
       setTimeout(() => {
         const q = questions[index];
@@ -160,22 +136,22 @@
           answersDiv.appendChild(div);
         });
 
-        trivia.classList.add("visible"); // fade in
+        trivia.classList.add("visible");
 
-        // Fade out wrong answers after 10 seconds
+        // Fade out wrong answers after 10s
         setTimeout(() => {
           document.querySelectorAll(".answer").forEach((el, i) => {
             if (i !== q.correct) el.classList.add("fade-out");
           });
         }, 10000);
 
-        // Advance after 20 seconds
+        // Advance to next Q after 20s
         setTimeout(() => {
           currentIndex = (currentIndex + 1) % questions.length;
           showQuestion(currentIndex);
         }, 20000);
 
-      }, 2000); // wait 2s before showing new question
+      }, 2000);
     }
 
     showQuestion(currentIndex);
