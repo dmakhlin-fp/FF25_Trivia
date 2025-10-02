@@ -157,6 +157,7 @@
           isCorrect: i === q.correct
         }));
 
+        // shuffle answers so correct is random each time
         answerObjects = shuffleArray(answerObjects);
 
         const answersDiv = document.getElementById("answers");
@@ -172,12 +173,14 @@
 
         trivia.classList.add("visible");
 
+        // Fade out wrong answers
         setTimeout(() => {
           document.querySelectorAll(".answer").forEach(el => {
             if (!el.dataset.correct) el.classList.add("fade-out");
           });
         }, 10000);
 
+        // Next question
         setTimeout(() => {
           currentIndex = (currentIndex + 1) % questions.length;
           showQuestion(currentIndex);
