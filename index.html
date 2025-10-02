@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>Shipping Trivia Loop</title>
 
+  <!-- Preload fonts -->
   <link rel="preload" href="Fonts/Antenna-BlackItalic.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="Fonts/GT-America-Standard-Medium.woff2" as="font" type="font/woff2" crossorigin>
 
@@ -26,7 +27,6 @@
       font-display: swap;
     }
 
-    /* Animated gradient */
     body {
       margin: 0;
       display: flex;
@@ -65,7 +65,7 @@
 
     .question {
       font-family: 'Antenna-BlackItalic', sans-serif !important;
-      font-size: 3.5rem;
+      font-size: 3.2rem;
       text-transform: uppercase;
       line-height: 1.3;
       max-width: 75%;
@@ -92,12 +92,13 @@
       background: #FFEB56;
       border-radius: 50px;
       padding: 1rem 2rem;
-      min-width: 350px;      /* consistent pill width */
-      min-height: 80px;      /* consistent button height */
+      min-width: 350px;
+      min-height: 80px;
       display: flex;
       justify-content: center;
       align-items: center;
       transition: opacity 3s ease;
+      text-align: center;
     }
 
     .fade-out { opacity: 0; }
@@ -113,10 +114,35 @@
     const questions = [
       { question: "What does 'TEU' stand for in shipping?", answers: ["Transport Efficiency Unit","Twenty-foot Equivalent Unit","Total Export Utility","Terminal Entry Usage"], correct: 1 },
       { question: "Which canal significantly shortens the shipping route between Europe and Asia?", answers: ["Panama Canal","Suez Canal","Kiel Canal","Corinth Canal"], correct: 1 },
+      { question: "What is the main container size used in global shipping?", answers: ["10-foot","20-foot","30-foot","50-foot"], correct: 1 },
       { question: "Which city is the world's busiest container port?", answers: ["Rotterdam","Shanghai","Singapore","Los Angeles"], correct: 1 },
+      { question: "What does 'FOB' stand for in freight terms?", answers: ["Free on Board","Freight on Balance","Full Offshore Booking","Free of Broker"], correct: 0 },
+      { question: "Which document serves as a receipt for shipped goods?", answers: ["Bill of Lading","Invoice","Manifest","Charter Party"], correct: 0 },
+      { question: "Which unit measures cargo ship capacity?", answers: ["Barrels","Cubic Feet","Deadweight Tonnage","Metric Tons"], correct: 2 },
+      { question: "The Panama Canal connects which two oceans?", answers: ["Atlantic and Pacific","Indian and Atlantic","Pacific and Arctic","Atlantic and Arctic"], correct: 0 },
+      { question: "Which Incoterm means the seller pays for transport and insurance?", answers: ["EXW","CIF","FCA","DAP"], correct: 1 },
+      { question: "What does 'ETA' mean in shipping?", answers: ["Estimated Transport Allocation","Estimated Time of Arrival","End Transit Agreement","Export Trade Approval"], correct: 1 },
+      { question: "Which country built the Belt and Road Initiative affecting shipping?", answers: ["USA","Germany","China","India"], correct: 2 },
+      { question: "What is the purpose of a reefer container?", answers: ["Store oversized cargo","Transport liquids","Carry refrigerated goods","Fast loading"], correct: 2 },
+      { question: "Which ocean handles the most container traffic?", answers: ["Atlantic Ocean","Indian Ocean","Pacific Ocean","Arctic Ocean"], correct: 2 },
+      { question: "Which port is the largest in Europe?", answers: ["Antwerp","Rotterdam","Hamburg","Marseille"], correct: 1 },
+      { question: "The term 'last mile delivery' refers to:", answers: ["Final leg to customer","First port unloading","Interstate trucking","Return logistics"], correct: 0 },
+      { question: "What does 'LCL' mean?", answers: ["Low Cargo Load","Less than Container Load","Loading Container Logistics","Long Cargo Lanes"], correct: 1 },
+      { question: "What technology tracks containers worldwide?", answers: ["Blockchain","GPS","5G","Artificial Intelligence"], correct: 1 },
+      { question: "Which port is the busiest in the United States?", answers: ["Miami","New York/New Jersey","Los Angeles","Houston"], correct: 2 },
+      { question: "What does 'intermodal' shipping involve?", answers: ["One transport only","Multiple transport modes","International only","Sea freight exclusively"], correct: 1 },
+      { question: "Which container type is used for liquids in bulk?", answers: ["Dry Van","Flat Rack","ISO Tank","Reefer"], correct: 2 }
     ];
 
     let currentIndex = 0;
+
+    function shuffleArray(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
 
     function showQuestion(index) {
       const trivia = document.getElementById("trivia");
@@ -126,26 +152,32 @@
         const q = questions[index];
         document.getElementById("question").textContent = q.question;
 
+        let answerObjects = q.answers.map((ans, i) => ({
+          text: ans,
+          isCorrect: i === q.correct
+        }));
+
+        answerObjects = shuffleArray(answerObjects);
+
         const answersDiv = document.getElementById("answers");
         answersDiv.innerHTML = "";
-        q.answers.forEach((ans, i) => {
+
+        answerObjects.forEach((ans) => {
           const div = document.createElement("div");
           div.className = "answer";
-          div.textContent = ans;
-          if (i === q.correct) div.dataset.correct = true;
+          div.textContent = ans.text;
+          if (ans.isCorrect) div.dataset.correct = true;
           answersDiv.appendChild(div);
         });
 
         trivia.classList.add("visible");
 
-        // Fade out wrong answers after 10s
         setTimeout(() => {
-          document.querySelectorAll(".answer").forEach((el, i) => {
-            if (i !== q.correct) el.classList.add("fade-out");
+          document.querySelectorAll(".answer").forEach(el => {
+            if (!el.dataset.correct) el.classList.add("fade-out");
           });
         }, 10000);
 
-        // Advance to next Q after 20s
         setTimeout(() => {
           currentIndex = (currentIndex + 1) % questions.length;
           showQuestion(currentIndex);
