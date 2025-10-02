@@ -71,8 +71,7 @@
       max-width: 80%;
       text-align: center;
       margin: 0 auto 3rem;
-      word-break: keep-all;
-      hyphens: none;
+      text-wrap: balance; /* NEW */
     }
 
     .answers {
@@ -99,6 +98,7 @@
       align-items: center;
       transition: opacity 3s ease;
       text-align: center;
+      text-wrap: balance; /* NEW */
     }
 
     .fade-out { opacity: 0; }
@@ -111,6 +111,11 @@
   </div>
 
   <script>
+    // ✅ Widow-fix helper: replaces last space with &nbsp;
+    function preventWidow(text) {
+      return text.replace(/\s+([^\s]+)$/, '\u00A0$1');
+    }
+
     const questions = [
       { q: "Which city is the world's busiest container port?", a: ["Rotterdam","Shanghai","Singapore","Los Angeles"], c: 1 },
       { q: "Which country built the Belt and Road Initiative affecting shipping?", a: ["USA","Germany","China","India"], c: 2 },
@@ -164,7 +169,7 @@
 
       setTimeout(() => {
         const q = questions[index];
-        document.getElementById("question").textContent = q.q;
+        document.getElementById("question").innerHTML = preventWidow(q.q);
 
         let answerObjects = q.a.map((ans, i) => ({
           text: ans,
@@ -179,7 +184,7 @@
         answerObjects.forEach((ans) => {
           const div = document.createElement("div");
           div.className = "answer";
-          div.textContent = ans.text;
+          div.innerHTML = preventWidow(ans.text);
           if (ans.isCorrect) div.dataset.correct = true;
           answersDiv.appendChild(div);
         });
